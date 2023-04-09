@@ -1,7 +1,7 @@
-output "s3_access_inventory_table_arn" {
-  value = aws_dynamodb_table.s3_access_inventory_table.arn
+output "table1_arn" {
+  value = aws_dynamodb_table.table1.arn
 }
 
-output "s3_access_inventory_summary_table_arn" {
-  value = aws_dynamodb_table.s3_access_inventory_summary_table.arn
+output "table2_arn" {
+  value = aws_dynamodb_table.table2.arn
 }

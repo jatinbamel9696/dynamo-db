@@ -1,26 +1,45 @@
-resource "aws_dynamodb_table" "s3_access_inventory_table" {
-  name           = var.s3_access_inventory_table_name
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "id"
+resource "aws_dynamodb_table" "table1" {
+  name             = var.table1_name
+  billing_mode     = "PROVISIONED"
+  hash_key         = var.partner_account_id_attr_name
+  read_capacity    = var.table1_read_capacity
+  write_capacity   = var.table1_write_capacity
   attribute {
-    name = "id"
-    type = "S"
-  }
-  tags = var.tags
-}
-
-resource "aws_dynamodb_table" "s3_access_inventory_summary_table" {
-  name           = var.s3_access_inventory_summary_table_name
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "id"
-  range_key      = "timestamp"
-  attribute {
-    name = "id"
-    type = "S"
-  }
-  attribute {
-    name = "timestamp"
+    name = var.partner_account_id_attr_name
     type = "N"
   }
-  tags = var.tags
+
+
+  server_side_encryption {
+    enabled = true
+  }
+  point_in_time_recovery {
+    enabled = var.backup_enabled
+  }
+  
+}
+
+resource "aws_dynamodb_table" "table2" {
+  name             = var.table2_name
+  billing_mode     = "PROVISIONED"
+  hash_key         = var.bucket_name_attr_name
+  range_key        = var.s3_access_id_attr_name
+  read_capacity    = var.table2_read_capacity
+  write_capacity   = var.table2_write_capacity
+  attribute {
+    name = var.bucket_name_attr_name
+    type = "S"
+  }
+
+  attribute {
+    name = var.s3_access_id_attr_name
+    type = "S"
+  }
+  server_side_encryption {
+    enabled = true
+  }
+  point_in_time_recovery {
+    enabled = var.backup_enabled
+  }
+
 }
